@@ -1,35 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
+import ToDoForm from "./components/ToDoForm";
+import ToDoList from "./components/ToDoList";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [tasks, setTasks] = useState([]);
+
+  const addTask = (text) => {
+    setTasks([...tasks, { id: Date.now(), text }]);
+  };
+
+  // Remove task function
+  const removeTask = (id) => {
+    setTasks(tasks.filter((task) => task.id !== id));
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="flex w-full justify-center  bg-gradient-to-br from-gray-900 to bg-gray-600 min-h-screen">
+      <div className=" bg-gradient-to-br from bg-gray-950 to gray-700 flex flex-col w-full max-w-3xl p-6 sm:p-12 rounded-2xl text-center my-6 sm:my-12 opacity-80">
+        <h1 className="font-extrabold text-4xl sm:text-5xl text-[#3488bf] pb-4 sm:pb-6">
+          To-Do App
+        </h1>
+        <ToDoForm addTask={addTask} />
+        <ToDoList task={tasks} removeTask={removeTask} />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
